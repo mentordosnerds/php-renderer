@@ -1,5 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * This file is part of mentordosnerds/php-renderer.
+ *
+ * This source file is subject to the license that is bundled
+ * with this source code in the file LICENSE.
+ *
+ * @link      https://github.com/mentordosnerds/php-renderer
+ * @copyright Copyright (c) 2020-2024 Felipe Sayão Lobato Abreu <github@mentordosnerds.com>
+ * @license   https://opensource.org/licenses/MIT MIT License
+ */
+
 namespace MentorDosNerds\PhpRenderer\Http\Message;
 
 use Psr\Http\Message\MessageInterface;
@@ -19,7 +32,6 @@ final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
         return $this->response->getProtocolVersion();
     }
 
-    /** {@inheritdoc} */
     public function withProtocolVersion($version): MessageInterface
     {
         return new self(
@@ -29,31 +41,26 @@ final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
         );
     }
 
-    /** {@inheritdoc} */
     public function getHeaders(): array
     {
         return $this->response->getHeaders();
     }
 
-    /** {@inheritdoc} */
     public function hasHeader($name): bool
     {
         return $this->response->hasHeader($name);
     }
 
-    /** {@inheritdoc} */
     public function getHeader($name): array
     {
         return $this->response->getHeader($name);
     }
 
-    /** {@inheritdoc} */
     public function getHeaderLine($name): string
     {
         return $this->response->getHeaderLine($name);
     }
 
-    /** {@inheritdoc} */
     public function withHeader($name, $value): self
     {
         return new self(
@@ -63,7 +70,6 @@ final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
         );
     }
 
-    /** {@inheritdoc} */
     public function withAddedHeader($name, $value): self
     {
         return new self(
@@ -73,7 +79,6 @@ final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
         );
     }
 
-    /** {@inheritdoc} */
     public function withoutHeader($name): self
     {
         return new self(
@@ -88,7 +93,6 @@ final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
         return $this->response->getBody();
     }
 
-    /** {@inheritdoc} */
     public function withBody(StreamInterface $body): self
     {
         return new self(
@@ -103,7 +107,6 @@ final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
         return $this->response->getStatusCode();
     }
 
-    /** {@inheritdoc} */
     public function withStatus($code, $reasonPhrase = ''): self
     {
         return new self(
@@ -119,7 +122,7 @@ final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
     }
 
     /**
-     * Returns an instance with the specified attribute
+     * Returns an instance with the specified attribute.
      */
     public function withContext(string $name, mixed $value): self
     {
@@ -131,7 +134,7 @@ final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
     }
 
     /**
-     * Retrieve the configured context
+     * Retrieve the configured context.
      *
      * @return array<string, mixed>
      */

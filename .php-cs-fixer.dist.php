@@ -13,13 +13,13 @@ declare(strict_types=1);
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace MentorDosNerds\PhpRenderer\Http\Message;
+use CoiSA\PhpCsFixer\PhpCsFixer;
 
-use Psr\Http\Message\ResponseInterface;
+$paths = [
+    __FILE__,
+    __DIR__,
+];
 
-interface PhpRendererResponseInterface extends ResponseInterface
-{
-    public function getTemplateName(): string;
+$header = file_get_contents(__DIR__ . '/.docheader');
 
-    public function getContext(): array;
-}
+return PhpCsFixer::create($paths, $header);
