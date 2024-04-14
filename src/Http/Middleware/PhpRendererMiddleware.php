@@ -25,10 +25,10 @@ final class PhpRendererMiddleware implements MiddlewareInterface
             return $response;
         }
 
-        $templatePath = $response->getTemplatePath();
-        $attributes = $response->getAttributes();
+        $name = $response->getTemplateName();
+        $context = $response->getContext();
 
-        $html = $this->renderer->render($templatePath, $attributes);
+        $html = $this->renderer->render($name, $context);
         $stream = $this->streamFactory->createStream($html);
 
         return $response

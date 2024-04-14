@@ -6,6 +6,6 @@ use Psr\Http\Message\ResponseInterface;
 
 interface PhpRendererResponseInterface extends ResponseInterface
 {
-    public function getTemplatePath(): string;
-    public function getAttributes(): array;
+    public function getTemplateName(): string;
+    public function getContext(): array;
 }

@@ -8,60 +8,59 @@ use Psr\Http\Message\StreamInterface;
 
 final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
 {
-    public const DEFAULT_TEMPLATE = 'index';
 
     public function __construct(
-        private readonly ResponseInterface $decoratedResponse,
-        private readonly string $templatePath = self::DEFAULT_TEMPLATE,
-        private readonly array $attributes = [],
+        private readonly ResponseInterface $response,
+        private readonly string $templateName,
+        private readonly array $context = [],
     ) {}
 
     public function getProtocolVersion(): string
     {
-        return $this->decoratedResponse->getProtocolVersion();
+        return $this->response->getProtocolVersion();
     }
 
     /** {@inheritdoc} */
     public function withProtocolVersion($version): MessageInterface
     {
         return new self(
-            $this->decoratedResponse->withProtocolVersion($version),
-            $this->templatePath,
-            $this->attributes,
+            $this->response->withProtocolVersion($version),
+            $this->templateName,
+            $this->context,
         );
     }
 
     /** {@inheritdoc} */
     public function getHeaders(): array
     {
-        return $this->decoratedResponse->getHeaders();
+        return $this->response->getHeaders();
     }
 
     /** {@inheritdoc} */
     public function hasHeader($name): bool
     {
-        return $this->decoratedResponse->hasHeader($name);
+        return $this->response->hasHeader($name);
     }
 
     /** {@inheritdoc} */
     public function getHeader($name): array
     {
-        return $this->decoratedResponse->getHeader($name);
+        return $this->response->getHeader($name);
     }
 
     /** {@inheritdoc} */
     public function getHeaderLine($name): string
     {
-        return $this->decoratedResponse->getHeaderLine($name);
+        return $this->response->getHeaderLine($name);
     }
 
     /** {@inheritdoc} */
     public function withHeader($name, $value): self
     {
         return new self(
-            $this->decoratedResponse->withHeader($name, $value),
-            $this->templatePath,
-            $this->attributes,
+            $this->response->withHeader($name, $value),
+            $this->templateName,
+            $this->context,
         );
     }
 
@@ -69,9 +68,9 @@ final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
     public function withAddedHeader($name, $value): self
     {
         return new self(
-            $this->decoratedResponse->withAddedHeader($name, $value),
-            $this->templatePath,
-            $this->attributes,
+            $this->response->withAddedHeader($name, $value),
+            $this->templateName,
+            $this->context,
         );
     }
 
@@ -79,80 +78,76 @@ final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
     public function withoutHeader($name): self
     {
         return new self(
-            $this->decoratedResponse->withoutHeader($name),
-            $this->templatePath,
-            $this->attributes,
+            $this->response->withoutHeader($name),
+            $this->templateName,
+            $this->context,
         );
     }
 
     public function getBody(): StreamInterface
     {
-        return $this->decoratedResponse->getBody();
+        return $this->response->getBody();
     }
 
     /** {@inheritdoc} */
     public function withBody(StreamInterface $body): self
     {
         return new self(
-            $this->decoratedResponse->withBody($body),
-            $this->templatePath,
-            $this->attributes,
+            $this->response->withBody($body),
+            $this->templateName,
+            $this->context,
         );
     }
 
     public function getStatusCode(): int
     {
-        return $this->decoratedResponse->getStatusCode();
+        return $this->response->getStatusCode();
     }
 
     /** {@inheritdoc} */
     public function withStatus($code, $reasonPhrase = ''): self
     {
         return new self(
-            $this->decoratedResponse->withStatus($code, $reasonPhrase),
-            $this->templatePath,
-            $this->attributes,
+            $this->response->withStatus($code, $reasonPhrase),
+            $this->templateName,
+            $this->context,
         );
     }
 
     public function getReasonPhrase(): string
     {
-        return $this->decoratedResponse->getReasonPhrase();
+        return $this->response->getReasonPhrase();
     }
 
     /**
      * Returns an instance with the specified attribute
      */
-    public function withAttribute(string $name, mixed $value): self
+    public function withContext(string $name, mixed $value): self
     {
         return new self(
-            $this->decoratedResponse,
-            $this->templatePath,
-            [$name => $value] + $this->attributes,
+            $this->response,
+            $this->templateName,
+            [$name => $value] + $this->context,
         );
     }
 
     /**
-     * Retrieve the configured attributes
+     * Retrieve the configured context
      *
      * @return array<string, mixed>
      */
-    public function getAttributes(): array
+    public function getContext(): array
     {
-        return $this->attributes;
+        return $this->context;
     }
 
-    public function withTemplatePath(string $templatePath): self
+    public function withTemplateName(string $name): self
     {
-        return new self(
-            $this->decoratedResponse,
-            $templatePath,
-            $this->attributes,
-        );
+        return new self($this->response, $name, $this->context);
     }
 
-    public function getTemplatePath(): string
+    public function getTemplateName(): string
     {
-        return $this->templatePath;
+        return $this->templateName;
     }
 }
