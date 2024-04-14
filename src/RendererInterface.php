@@ -4,5 +4,5 @@ namespace MentorDosNerds\PhpRenderer;
 
 interface RendererInterface
 {
-    public function render(string $templatePath, array $data): string;
+    public function render(string $name, array $context): string;
 }

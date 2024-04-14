@@ -10,20 +10,19 @@ final class PhpRenderer implements RendererInterface
         private string $templatesDirectory,
     ) {}
 
-    public function render(string $templatePath, array $data = []): string
+    public function render(string $name, array $context = []): string
     {
-        $templatePath = $this->templatesDirectory . DIRECTORY_SEPARATOR . $templatePath . '.php';
+        $templatePath = $this->templatesDirectory . DIRECTORY_SEPARATOR . $name . '.php';
 
         if (!file_exists($templatePath)) {
             throw new \InvalidArgumentException(sprintf('Template "%s" not found', $templatePath));
         }
 
-        $this->data = $data;
+        $this->data = $context;
 
         ob_start();
         include $templatePath;
-        $content = ob_get_clean();
 
-        return $content;
+        return ob_get_clean();
     }
 }
