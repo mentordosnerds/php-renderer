@@ -13,9 +13,13 @@ declare(strict_types=1);
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace MentorDosNerds\PhpRenderer;
+namespace MentorDosNerds\PhpRenderer\Http\Message;
 
-interface RendererInterface
+use Psr\Http\Message\ResponseInterface;
+
+interface PhpRendererResponseInterface extends ResponseInterface
 {
-    public function render(string $name, array $context): string;
+    public function getTemplateName(): string;
+
+    public function getContext(): array;
 }

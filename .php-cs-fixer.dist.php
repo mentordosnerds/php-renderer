@@ -13,9 +13,13 @@ declare(strict_types=1);
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace MentorDosNerds\PhpRenderer;
+use CoiSA\PhpCsFixer\PhpCsFixer;
 
-interface RendererInterface
-{
-    public function render(string $name, array $context): string;
-}
+$paths = [
+    __FILE__,
+    __DIR__,
+];
+
+$header = file_get_contents(__DIR__ . '/.docheader');
+
+return PhpCsFixer::create($paths, $header);
