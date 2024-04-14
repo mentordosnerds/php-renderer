@@ -8,7 +8,6 @@ use Psr\Http\Message\StreamInterface;
 
 final class PhpRendererResponseDecorator implements PhpRendererResponseInterface
 {
-
     public function __construct(
         private readonly ResponseInterface $response,
         private readonly string $templateName,
